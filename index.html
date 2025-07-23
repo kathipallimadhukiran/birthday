@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday!</title>
+    <title>Happy Birthday My Love!</title>
     <style>
         * {
             margin: 0;
@@ -13,14 +13,12 @@
 
         body {
             min-height: 100vh;
-              
- 
-            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #ff6b6b);
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Arial', sans-serif;
-           
+            overflow-x: hidden;
         }
 
         .container {
@@ -28,11 +26,12 @@
             padding: 2rem;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
             position: relative;
             max-width: 800px;
             width: 90%;
             animation: float 3s ease-in-out infinite;
+            z-index: 2;
         }
 
         @keyframes float {
@@ -50,7 +49,7 @@
 
         @keyframes colorChange {
             0% { color: #ff4757; }
-            50% { color: #ffd93d; }
+            50% { color: #ff6b6b; }
             100% { color: #ff4757; }
         }
 
@@ -60,12 +59,14 @@
             overflow: hidden;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s;
         }
 
         .birthday-image {
             max-width: 100%;
             height: auto;
             transition: transform 0.5s;
+            border-radius: 15px;
         }
 
         .birthday-image:hover {
@@ -79,12 +80,29 @@
             line-height: 1.6;
         }
 
+        .love-quote {
+            font-style: italic;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #ff4757;
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         .hearts {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             pointer-events: none;
             z-index: 1;
+            top: 0;
+            left: 0;
         }
 
         .heart {
@@ -94,6 +112,7 @@
             background: #ff4757;
             transform: rotate(45deg);
             animation: heartFloat 4s ease-in infinite;
+            opacity: 0.7;
         }
 
         .heart::before,
@@ -116,11 +135,11 @@
 
         @keyframes heartFloat {
             0% {
-                transform: rotate(45deg) translateY(0);
+                transform: rotate(45deg) translateY(0) translateX(0);
                 opacity: 1;
             }
             100% {
-                transform: rotate(45deg) translateY(-1000px);
+                transform: rotate(45deg) translateY(-1000px) translateX(100px);
                 opacity: 0;
             }
         }
@@ -134,7 +153,8 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 1rem;
+            margin: 1rem 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .surprise-button:hover {
@@ -148,28 +168,179 @@
             height: 10px;
             background: #ffd93d;
             animation: confettiFall 3s ease-in infinite;
+            z-index: 10;
         }
 
         @keyframes confettiFall {
             0% { transform: translateY(-100vh) rotate(0deg); }
             100% { transform: translateY(100vh) rotate(360deg); }
         }
+
+        .love-letter {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            max-width: 80%;
+            width: 500px;
+            animation: fadeIn 0.5s;
+        }
+
+        .love-letter h2 {
+            color: #ff4757;
+            margin-bottom: 1rem;
+        }
+
+        .love-letter p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .close-letter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ff4757;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 99;
+        }
+
+        .photo-collage {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .photo-collage img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin: 5px;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .photo-collage img:hover {
+            transform: scale(1.1);
+            z-index: 5;
+        }
+
+        .countdown {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            color: #ff4757;
+            font-weight: bold;
+        }
+
+        .heartbeat {
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .music-note {
+            position: absolute;
+            font-size: 24px;
+            color: #ff4757;
+            animation: floatNote 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatNote {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
     <div class="hearts" id="hearts"></div>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="love-letter" id="loveLetter">
+        <button class="close-letter" onclick="closeLoveLetter()">×</button>
+        <h2>To My Dearest Love ❤️</h2>
+        <p>Even though miles may lie between us, we're never far apart, for love doesn't count the miles, it's measured by the heart.</p>
+        <p>Every day without you feels incomplete, but knowing we're working toward our future together gives me strength. I cherish every moment we share, whether it's through messages, calls, or video chats.</p>
+        <p>On your special day, I want you to know that you're the most amazing person I've ever known. Your love gives me wings, and your smile lights up my world, even from thousands of miles away.</p>
+        <p>Happy birthday, my love. This distance is only temporary, but what we have is forever.</p>
+        <p>With all my love,<br>Me</p>
+    </div>
+
     <div class="container">
-        <h1>Happy Birthday! 🎉</h1>
+        <h1 class="heartbeat">Happy Birthday My Love! 💖</h1>
         <div class="image-container">
-            <!-- Replace 'your-image.jpg' with your actual image path -->
+            <!-- Replace with your actual image path -->
             <img src="./undefined.png" alt="Birthday Celebration" class="birthday-image">
         </div>
+        
+        <div class="countdown" id="countdown"></div>
+        
         <p class="message">
-            Wishing you a day filled with joy, laughter, and unforgettable moments! 🎂<br>
-            May this special day bring you all the happiness you deserve! 🌟
+            To the most incredible person in my life,<br>
+            Wishing you the happiest of birthdays! 🎂<br>
+            Though we're apart today, you're always in my heart. 💕
         </p>
-        <button class="surprise-button" onclick="createConfetti()">Click for a Surprise! 🎈</button>
+        
+        <div class="love-quote">
+            "Distance means so little when someone means so much."
+        </div>
+        
+        <div class="love-quote">
+            "I carry your heart with me (I carry it in my heart)." - E.E. Cummings
+        </div>
+        
+        <div class="photo-collage" id="photoCollage">
+            <!-- Add your collage images here -->
+            <img src="https://via.placeholder.com/120?text=Our+Memory+1" alt="Memory 1">
+            <img src="https://via.placeholder.com/120?text=Our+Memory+2" alt="Memory 2">
+            <img src="https://via.placeholder.com/120?text=Our+Memory+3" alt="Memory 3">
+            <img src="https://via.placeholder.com/120?text=Our+Memory+4" alt="Memory 4">
+            <img src="https://via.placeholder.com/120?text=Our+Memory+5" alt="Memory 5">
+            <img src="https://via.placeholder.com/120?text=Our+Memory+6" alt="Memory 6">
+        </div>
+        
+        <div>
+            <button class="surprise-button" onclick="createConfetti()">Confetti Surprise! 🎊</button>
+            <button class="surprise-button" onclick="showLoveLetter()">Love Letter 💌</button>
+            <button class="surprise-button" onclick="showPhotoCollage()">Our Memories 📸</button>
+            <button class="surprise-button" onclick="playRomanticMusic()">Play Music 🎵</button>
+        </div>
     </div>
+
+    <audio id="romanticMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         // Create floating hearts
@@ -178,15 +349,29 @@
             heart.className = 'heart';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
             document.getElementById('hearts').appendChild(heart);
             setTimeout(() => heart.remove(), 5000);
         }
 
-        setInterval(createHeart, 300);
+        setInterval(createHeart, 200);
+
+        // Create music notes
+        function createMusicNote() {
+            const notes = ['♪', '♫', '♩', '♬'];
+            const note = document.createElement('div');
+            note.className = 'music-note';
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = Math.random() * 100 + 'vw';
+            note.style.animationDuration = Math.random() * 2 + 2 + 's';
+            note.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(note);
+            setTimeout(() => note.remove(), 3000);
+        }
 
         // Create confetti
         function createConfetti() {
-            for(let i = 0; i < 50; i++) {
+            for(let i = 0; i < 100; i++) {
                 const confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.left = Math.random() * 100 + 'vw';
@@ -197,8 +382,82 @@
             }
         }
 
-        // Auto-trigger confetti every few seconds
-        setInterval(createConfetti, 5000);
+        // Show love letter
+        function showLoveLetter() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('loveLetter').style.display = 'block';
+            createConfetti();
+        }
+
+        function closeLoveLetter() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('loveLetter').style.display = 'none';
+        }
+
+        // Show photo collage
+        function showPhotoCollage() {
+            const collage = document.getElementById('photoCollage');
+            if (collage.style.display === 'flex') {
+                collage.style.display = 'none';
+            } else {
+                collage.style.display = 'flex';
+                createConfetti();
+            }
+        }
+
+        // Play romantic music
+        function playRomanticMusic() {
+            const music = document.getElementById('romanticMusic');
+            if (music.paused) {
+                music.play();
+                setInterval(createMusicNote, 500);
+                alert("Now playing our song! 🎶");
+            } else {
+                music.pause();
+            }
+        }
+
+        // Countdown to next meeting
+        function updateCountdown() {
+            // Set your next meeting date here
+            const nextMeetingDate = new Date("2023-12-25T00:00:00");
+            const now = new Date();
+            const diff = nextMeetingDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            
+            document.getElementById('countdown').innerHTML = 
+                `Only ${days} days until we're together again! 💑`;
+        }
+
+        // Update countdown every minute
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        // Auto-trigger confetti every 10 seconds
+        setInterval(createConfetti, 10000);
+
+        // Random love quotes
+        const loveQuotes = [
+            "I exist in two places, here and where you are.",
+            "The simple lack of you is more to me than others' presence.",
+            "Absence is to love as wind is to fire; it extinguishes the small and kindles the great.",
+            "If I had a flower for every time I thought of you, I could walk in my garden forever.",
+            "You're my favorite hello and my hardest goodbye.",
+            "No matter where you are, you'll always be my favorite place.",
+            "The distance between us is nothing compared to the love between us."
+        ];
+
+        function showRandomQuote() {
+            const quotes = document.querySelectorAll('.love-quote');
+            quotes.forEach(quote => {
+                quote.textContent = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+            });
+        }
+
+        // Change quotes every 15 seconds
+        setInterval(showRandomQuote, 15000);
     </script>
 </body>
 </html>
