@@ -60,6 +60,7 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.5s;
+            cursor: pointer;
         }
 
         .birthday-image {
@@ -67,6 +68,7 @@
             height: auto;
             transition: transform 0.5s;
             border-radius: 15px;
+            display: block;
         }
 
         .birthday-image:hover {
@@ -144,24 +146,6 @@
             }
         }
 
-        .surprise-button {
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            background: #ff4757;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin: 1rem 0.5rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .surprise-button:hover {
-            background: #ff6b6b;
-            transform: scale(1.1);
-        }
-
         .confetti {
             position: fixed;
             width: 10px;
@@ -225,11 +209,11 @@
         }
 
         .photo-collage {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             justify-content: center;
             margin: 1rem 0;
-            display: none;
+            animation: fadeIn 1s;
         }
 
         .photo-collage img {
@@ -252,6 +236,7 @@
             margin: 1rem 0;
             color: #ff4757;
             font-weight: bold;
+            display: none;
         }
 
         .heartbeat {
@@ -280,6 +265,18 @@
             90% { opacity: 1; }
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
+
+        .image-click-text {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 0 0 15px 15px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -298,9 +295,10 @@
 
     <div class="container">
         <h1 class="heartbeat">Happy Birthday My Love! 💖</h1>
-        <div class="image-container">
+        <div class="image-container" id="mainImage">
             <!-- Replace with your actual image path -->
             <img src="./undefined.png" alt="Birthday Celebration" class="birthday-image">
+            <div class="image-click-text">Click me for surprises!</div>
         </div>
         
         <div class="countdown" id="countdown"></div>
@@ -315,10 +313,6 @@
             "Distance means so little when someone means so much."
         </div>
         
-        <div class="love-quote">
-            "I carry your heart with me (I carry it in my heart)." - E.E. Cummings
-        </div>
-        
         <div class="photo-collage" id="photoCollage">
             <!-- Add your collage images here -->
             <img src="https://via.placeholder.com/120?text=Our+Memory+1" alt="Memory 1">
@@ -327,13 +321,6 @@
             <img src="https://via.placeholder.com/120?text=Our+Memory+4" alt="Memory 4">
             <img src="https://via.placeholder.com/120?text=Our+Memory+5" alt="Memory 5">
             <img src="https://via.placeholder.com/120?text=Our+Memory+6" alt="Memory 6">
-        </div>
-        
-        <div>
-            <button class="surprise-button" onclick="createConfetti()">Confetti Surprise! 🎊</button>
-            <button class="surprise-button" onclick="showLoveLetter()">Love Letter 💌</button>
-            <button class="surprise-button" onclick="showPhotoCollage()">Our Memories 📸</button>
-            <button class="surprise-button" onclick="playRomanticMusic()">Play Music 🎵</button>
         </div>
     </div>
 
@@ -401,7 +388,6 @@
                 collage.style.display = 'none';
             } else {
                 collage.style.display = 'flex';
-                createConfetti();
             }
         }
 
@@ -411,7 +397,6 @@
             if (music.paused) {
                 music.play();
                 setInterval(createMusicNote, 500);
-                alert("Now playing our song! 🎶");
             } else {
                 music.pause();
             }
@@ -425,18 +410,41 @@
             const diff = nextMeetingDate - now;
             
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             
-            document.getElementById('countdown').innerHTML = 
-                `Only ${days} days until we're together again! 💑`;
+            const countdown = document.getElementById('countdown');
+            countdown.innerHTML = `Only ${days} days until we're together again! 💑`;
+            countdown.style.display = 'block';
         }
 
-        // Update countdown every minute
-        updateCountdown();
-        setInterval(updateCountdown, 60000);
-
-        // Auto-trigger confetti every 10 seconds
-        setInterval(createConfetti, 10000);
+        // Handle image click
+        let clickCount = 0;
+        document.getElementById('mainImage').addEventListener('click', function() {
+            clickCount++;
+            
+            // Always create confetti
+            createConfetti();
+            
+            // Different surprise for each click
+            switch(clickCount) {
+                case 1:
+                    showLoveLetter();
+                    break;
+                case 2:
+                    showPhotoCollage();
+                    break;
+                case 3:
+                    playRomanticMusic();
+                    updateCountdown();
+                    break;
+                default:
+                    // After all surprises shown, just keep making confetti
+                    break;
+            }
+            
+            // Reset counter after all surprises shown
+            if (clickCount > 3) clickCount = 0;
+        });
 
         // Random love quotes
         const loveQuotes = [
